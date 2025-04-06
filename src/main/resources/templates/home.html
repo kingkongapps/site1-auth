@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+<th:block th:include="~{/fragments/header}"></th:block>
+<H1>Keycloak Test-1 : Home (Authentication : Keycloak)</H1>
+<BR>
+<a href="/admin/admin-test1">Go Admin-Test1</a><BR>
+<a href="/admin/admin-test2">Go Admin-Test2</a><BR>
+
+<a href="/user/user-test1">Go User-Test1</a><BR>
+<a href="/user/user-test2">Go User-Test2</a><BR>
+
+<HR>
+
+<a href="http://localhost:8081">Go Site1...</a><BR>
+<a href="http://localhost:8082">Go Site2...</a><BR>
+<a href="http://localhost:8083">Go Site3...</a><BR>
+
+</body>
+</html>
