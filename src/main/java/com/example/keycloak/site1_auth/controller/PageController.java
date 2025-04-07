@@ -41,4 +41,21 @@ public class PageController {
         return "/login/login";
     }
 
+    @GetMapping(value = "/token")
+    public String goToken() {
+        System.out.println("goToken()...");
+        return "/login/token";
+    }
+
+    @GetMapping(value = "/login/profile")
+    public String goProfile() {
+        System.out.println("goProfile()...");
+        return "/login/token";
+    }
+
+    @GetMapping(value = "/jwt-decode")
+    public String goJWTDecode() {
+        System.out.println("goJWTDecode()...");
+        return "/login/jwt-decode";
+    }
 }

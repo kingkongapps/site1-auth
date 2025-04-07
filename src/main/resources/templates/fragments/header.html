@@ -21,7 +21,7 @@
 <body>
 <div th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="/jwt-decode.html">Navbar(Site-1)</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -46,6 +46,7 @@
             </ul>
 
             &nbsp;
+            <li sec:authorize="isAuthenticated()"><a href="/login/profile">Hello, <span sec:authentication="principal.givenName"></span> (<span sec:authentication="principal.preferredUsername"></span>) 님 !!!</a></li>
             &nbsp;
             <a sec:authorize="isAnonymous()" class="btn btn-outline-info my-2 my-sm-0 btn-sm" href="/login2">Login</a>
             &nbsp;

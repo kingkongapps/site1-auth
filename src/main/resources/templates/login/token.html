@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get Token</title>
+</head>
+<body>
+<th:block th:replace="/fragments/header"></th:block>
+<div class="container">
+    <h1>Token Info</h1>
+    User-ID : <input type="text" id="userId" name="userId" size="100" readonly /> <BR>
+    User-Name : <input type="text" id="userName" name="userName" size="100" readonly /> <BR>
+    Access-Token : <textarea aria-readonly="true" id="access_token" name="access_token" cols="100" rows="5"></textarea> <BR>
+    Access-Token : <textarea aria-readonly="true" id="decoded_access_token" name="access_token" cols="100" rows="5"></textarea> <BR>
+    Refresh-Token : <textarea aria-readonly="true" id="refresh_token" name="refresh_token" cols="100" rows="5"></textarea> <BR>
+    Refresh-Token : <textarea aria-readonly="true" id="decoded_refresh_token" name="refresh_token" cols="100" rows="5"></textarea> <BR>
+</div>
+
+<script>
+    $.ajax({
+        url: '/get-token',
+        method: 'get',
+        success: function(data, status, xhr) {
+            console.log('data=' + JSON.stringify(data));
+            //
+            $('#token').empty();
+            $('#refresh_token').empty();
+            //
+            $('#userId').val(data.userId);
+            $('#userName').val(data.userName);
+            $('#access_token').text(data.token);
+            $('#refresh_token').text(data.refresh_token);
+
+            //
+            document.cookie = "token=" + data.token + "; max-age=60";
+            document.cookie = "refresh_token=" + data.refresh_token + "; max-age=60";
+
+            //
+            decodeJWT_accessToken();
+            decodeJWT_refreshaccessToken();
+        },
+        error: function(data, status, xhr) {
+            console.log(err);
+        }
+    });
+
+    function base64UrlDecode(str) {
+      str = str.replace(/-/g, '+').replace(/_/g, '/');
+      const pad = str.length % 4;
+      if (pad) str += '='.repeat(4 - pad);
+      try {
+        return decodeURIComponent(escape(atob(str)));
+      } catch (e) {
+        return '[디코딩 실패]';
+      }
+    }
+
+    function decodeJWT_accessToken() {
+      const input = document.getElementById('access_token').value.trim();
+      const resultArea = document.getElementById('decoded_access_token');
+
+      if (!input) {
+        resultArea.value = '⚠️ JWT 토큰을 입력해주세요.';
+        return;
+      }
+
+      const parts = input.split('.');
+      if (parts.length !== 3) {
+        resultArea.value = '⚠️ JWT는 3개의 점(.)으로 구분된 문자열이어야 합니다.';
+        return;
+      }
+
+      try {
+        const header = JSON.parse(base64UrlDecode(parts[0]));
+        const payload = JSON.parse(base64UrlDecode(parts[1]));
+
+        resultArea.value =
+          '📌 [Header]\n' +
+          JSON.stringify(header, null, 2) +
+          '\n\n📌 [Payload]\n' +
+          JSON.stringify(payload, null, 2);
+      } catch (e) {
+        resultArea.value = '❌ JSON 파싱 오류: 잘못된 JWT 토큰입니다.';
+      }
+    }
+
+    function decodeJWT_refreshaccessToken() {
+      const input = document.getElementById('refresh_token').value.trim();
+      const resultArea = document.getElementById('decoded_refresh_token');
+
+      if (!input) {
+        resultArea.value = '⚠️ JWT 토큰을 입력해주세요.';
+        return;
+      }
+
+      const parts = input.split('.');
+      if (parts.length !== 3) {
+        resultArea.value = '⚠️ JWT는 3개의 점(.)으로 구분된 문자열이어야 합니다.';
+        return;
+      }
+
+      try {
+        const header = JSON.parse(base64UrlDecode(parts[0]));
+        const payload = JSON.parse(base64UrlDecode(parts[1]));
+
+        resultArea.value =
+          '📌 [Header]\n' +
+          JSON.stringify(header, null, 2) +
+          '\n\n📌 [Payload]\n' +
+          JSON.stringify(payload, null, 2);
+      } catch (e) {
+        resultArea.value = '❌ JSON 파싱 오류: 잘못된 JWT 토큰입니다.';
+      }
+    }
+</script>
+</body>
+</html>
