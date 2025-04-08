@@ -14,6 +14,7 @@
 <th:block th:include="~{/fragments/header}"></th:block>
 <H1>Keycloak Site-1 : Admin-Test1 (Authentication : Keycloak)</H1>
 <BR>
+[ 메뉴 이동 ]<BR>
 <a href="/admin/admin-test1">Go Admin-Test1</a><BR>
 <a href="/admin/admin-test2">Go Admin-Test2</a><BR>
 
@@ -22,9 +23,14 @@
 
 <HR>
 
-<a href="http://localhost:8081/login_sso">Go Site1...</a> | <a href="http://localhost:8081/token">Get Site1 Token</a> <BR>
-<a href="http://localhost:8082/login_sso">Go Site2...</a> | <a href="http://localhost:8082/token">Get Site2 Token</a> <BR>
-<a href="http://localhost:8083/login_sso">Go Site3...</a> | <a href="http://localhost:8083/token">Get Site3 Token</a> <BR>
+[ Site 이동 ]<BR>
+<a href="#">Go Site1...</a>                              | <a th:href="${SITE_URL1 + '/token'}">Get Site1 Token</a> <BR>
+<a th:href="${SITE_URL2 + '/login_sso'}">Go Site2...</a> | <a th:href="${SITE_URL2 + '/token'}">Get Site2 Token</a> <BR>
+<a th:href="${SITE_URL3 + '/login_sso'}">Go Site3...</a> | <a th:href="${SITE_URL3 + '/token'}">Get Site3 Token</a> <BR>
+
+<BR>
+<BR>
+<a href="/logout"> [ LOTOUT ] </a>
 
 </body>
 </html>

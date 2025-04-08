@@ -2,18 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get Token</title>
 </head>
 <body>
 <th:block th:replace="/fragments/header"></th:block>
 <div class="container">
     <h1>Token Info</h1>
-    User-ID : <input type="text" id="userId" name="userId" size="100" readonly /> <BR>
-    User-Name : <input type="text" id="userName" name="userName" size="100" readonly /> <BR>
-    Access-Token : <textarea aria-readonly="true" id="access_token" name="access_token" cols="100" rows="5"></textarea> <BR>
-    Access-Token : <textarea aria-readonly="true" id="decoded_access_token" name="access_token" cols="100" rows="5"></textarea> <BR>
-    Refresh-Token : <textarea aria-readonly="true" id="refresh_token" name="refresh_token" cols="100" rows="5"></textarea> <BR>
-    Refresh-Token : <textarea aria-readonly="true" id="decoded_refresh_token" name="refresh_token" cols="100" rows="5"></textarea> <BR>
+    User-ID :<BR>
+    <input type="text" id="userId" name="userId" size="100" readonly /> <BR>
+    User-Name :<BR>
+    <input type="text" id="userName" name="userName" size="100" readonly /> <BR>
+    Access-Token :<BR>
+    <textarea aria-readonly="true" id="access_token" name="access_token" cols="100" rows="2"></textarea> <BR>
+    Access-Token (Decoded) :<BR>
+    <textarea aria-readonly="true" id="decoded_access_token" name="access_token" cols="100" rows="12"></textarea> <BR>
+    Refresh-Token :<BR>
+    <textarea aria-readonly="true" id="refresh_token" name="refresh_token" cols="100" rows="2"></textarea> <BR>
+    Refresh-Token (Decoded) :<BR>
+    <textarea aria-readonly="true" id="decoded_refresh_token" name="refresh_token" cols="100" rows="12"></textarea> <BR>
 </div>
 
 <script>
