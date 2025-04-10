@@ -13,14 +13,18 @@
     <input type="text" id="userId" name="userId" size="100" readonly /> <BR>
     User-Name :<BR>
     <input type="text" id="userName" name="userName" size="100" readonly /> <BR>
+    ID-Token :<BR>
+    <textarea aria-readonly="true" id="id_token" name="id_token" cols="100" rows="2"></textarea> <BR>
+    ID-Token (Decoded) :<BR>
+    <textarea aria-readonly="true" id="decoded_id_token" name="decoded_id_token" cols="100" rows="12"></textarea> <BR>
     Access-Token :<BR>
     <textarea aria-readonly="true" id="access_token" name="access_token" cols="100" rows="2"></textarea> <BR>
     Access-Token (Decoded) :<BR>
-    <textarea aria-readonly="true" id="decoded_access_token" name="access_token" cols="100" rows="12"></textarea> <BR>
+    <textarea aria-readonly="true" id="decoded_access_token" name="decoded_access_token" cols="100" rows="12"></textarea> <BR>
     Refresh-Token :<BR>
     <textarea aria-readonly="true" id="refresh_token" name="refresh_token" cols="100" rows="2"></textarea> <BR>
     Refresh-Token (Decoded) :<BR>
-    <textarea aria-readonly="true" id="decoded_refresh_token" name="refresh_token" cols="100" rows="12"></textarea> <BR>
+    <textarea aria-readonly="true" id="decoded_refresh_token" name="decoded_refresh_token" cols="100" rows="12"></textarea> <BR>
 </div>
 
 <script>
@@ -35,16 +39,18 @@
             //
             $('#userId').val(data.userId);
             $('#userName').val(data.userName);
-            $('#access_token').text(data.token);
+            $('#id_token').text(data.id_token);
+            $('#access_token').text(data.access_token);
             $('#refresh_token').text(data.refresh_token);
 
             //
-            document.cookie = "token=" + data.token + "; max-age=60";
+            document.cookie = "access_token=" + data.token + "; max-age=60";
             document.cookie = "refresh_token=" + data.refresh_token + "; max-age=60";
 
             //
-            decodeJWT_accessToken();
-            decodeJWT_refreshaccessToken();
+            decodeJWT("id_token", "decoded_id_token");
+            decodeJWT("access_token", "decoded_access_token");
+            decodeJWT("refresh_token", "decoded_refresh_token");
         },
         error: function(data, status, xhr) {
             console.log(err);
@@ -62,38 +68,9 @@
       }
     }
 
-    function decodeJWT_accessToken() {
-      const input = document.getElementById('access_token').value.trim();
-      const resultArea = document.getElementById('decoded_access_token');
-
-      if (!input) {
-        resultArea.value = '⚠️ JWT 토큰을 입력해주세요.';
-        return;
-      }
-
-      const parts = input.split('.');
-      if (parts.length !== 3) {
-        resultArea.value = '⚠️ JWT는 3개의 점(.)으로 구분된 문자열이어야 합니다.';
-        return;
-      }
-
-      try {
-        const header = JSON.parse(base64UrlDecode(parts[0]));
-        const payload = JSON.parse(base64UrlDecode(parts[1]));
-
-        resultArea.value =
-          '📌 [Header]\n' +
-          JSON.stringify(header, null, 2) +
-          '\n\n📌 [Payload]\n' +
-          JSON.stringify(payload, null, 2);
-      } catch (e) {
-        resultArea.value = '❌ JSON 파싱 오류: 잘못된 JWT 토큰입니다.';
-      }
-    }
-
-    function decodeJWT_refreshaccessToken() {
-      const input = document.getElementById('refresh_token').value.trim();
-      const resultArea = document.getElementById('decoded_refresh_token');
+    function decodeJWT(encoded_field, decoded_field) {
+      const input = document.getElementById(encoded_field).value.trim();
+      const resultArea = document.getElementById(decoded_field);
 
       if (!input) {
         resultArea.value = '⚠️ JWT 토큰을 입력해주세요.';
