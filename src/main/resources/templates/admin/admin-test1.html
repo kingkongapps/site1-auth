@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +14,7 @@
 </head>
 <body>
 <th:block th:include="~{/fragments/header}"></th:block>
-<H1>Keycloak Site-1 : Admin-Test1 (Authentication : Keycloak)</H1>
+<H1>Keycloak SSO Test Site-1 : Admin-Test1 (Authentication)</H1>
 <BR>
 [ 메뉴 이동 ]<BR>
 <a href="/admin/admin-test1">Go Admin-Test1</a><BR>
@@ -24,13 +26,14 @@
 <HR>
 
 [ Site 이동 ]<BR>
-<a href="#">Go Site1...</a>                              | <a th:href="${SITE_URL1 + '/token'}">Get Site1 Token</a> <BR>
-<a th:href="${SITE_URL2 + '/login_sso'}">Go Site2...</a> | <a th:href="${SITE_URL2 + '/token'}">Get Site2 Token</a> <BR>
-<a th:href="${SITE_URL3 + '/login_sso'}">Go Site3...</a> | <a th:href="${SITE_URL3 + '/token'}">Get Site3 Token</a> <BR>
+<a href="#">Go Site1...</a>                              | <a th:href="${SITE_URL1 + '/login/profile'}">Get Site1 Token</a> <BR>
+<a th:href="${SITE_URL2 + '/login_sso'}">Go Site2...</a> | <a th:href="${SITE_URL2 + '/login/profile'}">Get Site2 Token</a> <BR>
+<a th:href="${SITE_URL3 + '/login_sso'}">Go Site3...</a> | <a th:href="${SITE_URL3 + '/login/profile'}">Get Site3 Token</a> <BR>
 
 <BR>
 <BR>
-<a href="/logout"> [ LOTOUT ] </a>
+<a sec:authorize="isAnonymous()" href="/login-sso"> [ LOGIN ] </a>
+<a sec:authorize="isAuthenticated()" href="/logout"> [ LOGOUT ] </a>
 
 </body>
 </html>

@@ -55,15 +55,4 @@ public class TokenRestController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-//    private String getRefreshToken(Authentication authentication) {
-//        OidcUser oidcUser = (OidcUser)  authentication.getPrincipal();
-//        String clientRegistrationId = "keycloak";
-//        OAuth2AuthorizedClient client = oAuth2AuthorizedClientService.loadAuthorizedClient(clientRegistrationId, oidcUser.getName());
-//
-//        if( client != null) {
-//            return client.getRefreshToken().getTokenValue();
-//        }
-//
-//        return null;
-//    }
 }
