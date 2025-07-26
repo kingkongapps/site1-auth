@@ -49,7 +49,7 @@
             </ul>
 
             &nbsp;
-            <li sec:authorize="isAuthenticated()"><a href="/login/profile">Hello, <span sec:authentication="principal.givenName"></span> (<span sec:authentication="principal.preferredUsername"></span>) 님 !!!</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/login/profile">Hello, <span sec:authentication="principal.email"></span> (<span sec:authentication="principal.preferredUsername"></span>) 님 !!!</a></li>
             &nbsp;
             <a sec:authorize="isAnonymous()" class="btn btn-outline-info my-2 my-sm-0 btn-sm" href="/login2">Login</a>
             &nbsp;

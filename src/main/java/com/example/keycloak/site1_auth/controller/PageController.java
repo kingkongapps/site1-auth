@@ -1,9 +1,14 @@
 package com.example.keycloak.site1_auth.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.security.Principal;
 
 @Controller
 public class PageController {
@@ -29,6 +34,10 @@ public class PageController {
     @GetMapping(value = "/admin/admin-test1")
     public String goAdminTest1(Model model) {
         System.out.println("goAdminTest1()...");
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+//        Principal principal = authentication.getPrincipal();
 
         model.addAttribute("SITE_URL1", siteUrl1);
         model.addAttribute("SITE_URL2", siteUrl2);

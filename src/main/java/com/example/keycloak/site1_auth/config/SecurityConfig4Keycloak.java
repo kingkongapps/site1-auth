@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -56,6 +57,8 @@ public class SecurityConfig4Keycloak {
 
     @Bean
     public AuthenticationSuccessHandler successHandler() {
+//        OAuth2LoginAuthenticationFilter test = new OAuth2LoginAuthenticationFilter();
+
         return (((request, response, authentication) -> {
             System.out.println("LOGIN_SUCCESS............");
             response.sendRedirect("/");
